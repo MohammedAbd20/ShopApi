@@ -208,6 +208,6 @@ php artisan make:migration create_shops_table
 
 # About the Developer
 This project was developed by Mohammed Abd Elrahman.
-Contact: mohhamabd18@example.com
+Contact: mohhamabd18@gmail.com
 GitHub: https://github.com/MohammedAbd20
 #
