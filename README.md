@@ -7,9 +7,6 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
-# Description
-This Project is the First Laravel Project and The Target of this Project is to Try Php and Laravel to See how the Language and The Framework Looks Like when You Implement Logic and Database Connection, Response Mapper, Custom Database Query and Each Controller Implemented to be Based on Crud Implementation for Create , Update, Delete, Get and This project Designed to Be Always return Json Response Because UI Side Depends on Frontend Frameworks, Apps This is Just Server Side Logic
-
 # Project Structure
 1. Controllers is the Main Point For All Api's
 2. Services is the Logic of Each End Point
