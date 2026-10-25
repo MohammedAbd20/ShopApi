@@ -81,34 +81,83 @@ Most list groups also support `/enabled` and `/disabled`.
 
 ## Examples
 
-### Create a user
+Every request and response below was captured from a local run of this API (SQLite, `php artisan serve`). Timestamps and the token are shortened, and `stackTrace` is left out of the error responses (see the note at the end).
+
+All requests send `Accept: application/json` and `Content-Type: application/json`.
+
+### 1. Register
 
 `POST /api/v1/users`
 
 ```json
 {
-  "name": "Jane Doe",
-  "email": "jane@example.com",
-  "password": "********",
+  "name": "Sara Ahmad",
+  "image": "https://example.com/sara.png",
+  "email": "sara@example.com",
+  "password": "Secret123",
   "gender": "Female",
   "age": 28,
-  "phone_number": "0000000000",
-  "location_name": "Gaza",
-  "type": "Customer",
-  "security_question": "Your first school?",
-  "security_question_answer": "********"
+  "phone_number": "+970591234567",
+  "location_lat": 31.5,
+  "location_lng": 34.46,
+  "location_name": "Gaza City",
+  "security_question": "First school?",
+  "security_question_answer": "Al-Zaytoun",
+  "type": "User"
 }
 ```
 
-### Login
+`gender` is `Male` or `Female`. `type` is `User`, `Admin` or `Shop`. The password must be 8 to 25 characters.
+
+Response, HTTP 201:
+
+```json
+{
+  "code": 201,
+  "message": "Data Found",
+  "status": true,
+  "path": "http://127.0.0.1:8200/api/v1/users",
+  "data": {
+    "name": "Sara Ahmad",
+    "email": "sara@example.com",
+    "gender": "Female",
+    "age": 28,
+    "phone_number": "+970591234567",
+    "location_name": "Gaza City",
+    "type": "User",
+    "is_account_activated": 0,
+    "status": "NOT_VERIFIED",
+    "id": 1
+  }
+}
+```
+
+A new account cannot log in until its phone number is verified:
+
+```json
+{ "code": 400, "message": "Failed", "status": false,
+  "errorMessage": "Account Not Verified, Please Verify The Phone Number" }
+```
+
+### 2. Verify the phone number
+
+`POST /api/v1/users/otp/refresh` with `{ "id": 1 }` creates a verification code and answers `"message": "Code Sent"`. The code is stored in the `phone_numbers` table, and no SMS provider is configured in this repository, so read it from there when running locally.
+
+`POST /api/v1/users/otp/verify`
+
+```json
+{ "id": 1, "code": "<code from phone_numbers>" }
+```
+
+The response is the same user object with `"status": "VERIFIED"` and `"is_account_activated": 1`.
+
+### 3. Log in
 
 `POST /api/v1/users/login`
 
 ```json
-{ "email": "jane@example.com", "password": "********" }
+{ "email": "sara@example.com", "password": "Secret123" }
 ```
-
-Response:
 
 ```json
 {
@@ -116,23 +165,61 @@ Response:
   "message": "Data Found",
   "status": true,
   "data": {
-    "user": { "id": 7, "name": "Jane Doe", "email": "jane@example.com" },
-    "token": "<jwt-token>",
+    "user": { "id": 1, "name": "Sara Ahmad", "email": "sara@example.com", "status": "VERIFIED" },
+    "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...",
     "tokenKey": "Bearer"
   }
 }
 ```
 
-### Error format
+### 4. Create and list categories
+
+`POST /api/v1/categories`
+
+```json
+{ "nameAr": "مطاعم", "nameEn": "Restaurants", "image": "https://example.com/restaurants.png" }
+```
 
 ```json
 {
-  "code": 400,
-  "message": "Failed",
-  "status": false,
-  "errorMessage": "Incorrect Email Or Password Please Try Again"
+  "code": 201,
+  "message": "Data Found",
+  "status": true,
+  "data": {
+    "nameEn": "Restaurants",
+    "image": "https://example.com/restaurants.png",
+    "is_enabled": 1,
+    "id": 1
+  }
 }
 ```
+
+`GET /api/v1/categories`
+
+```json
+{
+  "code": 200,
+  "message": "Data Found",
+  "status": true,
+  "data": [
+    { "nameEn": "Restaurants", "image": "https://example.com/restaurants.png", "is_enabled": 1, "id": 1 }
+  ],
+  "size": 1
+}
+```
+
+### Errors
+
+Failures return HTTP 400 and the same envelope with `status: false` and an `errorMessage`:
+
+| Request | `errorMessage` |
+|---|---|
+| Register with a password shorter than 8 characters | `User Password Length Required Min 8 (Field password)` |
+| Register with an email that already exists | `Email Already Used ...` |
+| Log in with a wrong password | `Incorrect Email Or Password Please Try Again` |
+| Create a category without `nameEn` | `English Name Required` |
+
+> **Known issue:** error responses also include a `stackTrace` field with server file paths. Return it only when `APP_DEBUG` is on before deploying this API anywhere public.
 
 ## Tests
 
