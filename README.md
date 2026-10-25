@@ -1,213 +1,149 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# ShopApi
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A RESTful API built with **Laravel** for managing shops, shop branches, product categories, items and customer comments. It includes JWT authentication, OTP account verification and security-question password reset.
 
-# Project Structure
-1. Controllers is the Main Point For All Api's
-2. Services is the Logic of Each End Point
-3. Model is The Current Model Saved in Database
-4. JWT In Login Request
+![Laravel](https://img.shields.io/badge/Laravel-FF2D20?logo=laravel&logoColor=white)
+![PHP](https://img.shields.io/badge/PHP-777BB4?logo=php&logoColor=white)
+![JWT](https://img.shields.io/badge/Auth-JWT-000000?logo=jsonwebtokens&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
+![License](https://img.shields.io/badge/License-Apache_2.0-blue)
 
-# Controllers
-1. Users Api
-2. Shops Api
-3. Items Api
-4. User Address Api
-5. Shop Branches Api
-6. Items Comments Controller
-7. Category Controller
+## Features
 
-# Api's Paths
-1. POST : http://127.0.0.1:8000/api/v1/users
-2. POST : http://127.0.0.1:8000/api/v1/users/login
-3. POST : http://127.0.0.1:8000/api/v1/users/otp/refresh
-4. POST : http://127.0.0.1:8000/api/v1/users/otp/verify
-5. GET : http://127.0.0.1:8000/api/v1/users/reset/question
-6. POST : http://127.0.0.1:8000/api/v1/users/reset/answer
-7. GET : http://127.0.0.1:8000/api/v1/users
-8. GET : http://127.0.0.1:8000/api/v1/users/1
-9. GET : http://127.0.0.1:8000/api/v1/users/enabled
-10. GET : http://127.0.0.1:8000/api/v1/users/disabled
-11. DELETE : http://127.0.0.1:8000/api/v1/users
-12. DELETE : http://127.0.0.1:8000/api/v1/users/1
+- User registration and login with **JWT** (Bearer token)
+- **OTP** verification and refresh
+- Password reset through a security question
+- CRUD for users, shops, shop branches, categories, items and item comments
+- User addresses
+- Filtering by status (`enabled` / `disabled`), search and `latest` endpoints
+- Consistent JSON response envelope for success and error cases
+- Docker setup with Nginx
 
-13. POST : http://127.0.0.1:8000/api/v1/shops/users/addresses
-14. GET : http://127.0.0.1:8000/api/v1/shops/users/addresses
-15. GET : http://127.0.0.1:8000/api/v1/shops/users/addresses/1
-16. GET : http://127.0.0.1:8000/api/v1/shops/users/addresses/enabled
-17. GET : http://127.0.0.1:8000/api/v1/shops/users/addresses/disabled
-18. DELETE : http://127.0.0.1:8000/api/v1/users/addresses/branches
-19. DELETE : http://127.0.0.1:8000/api/v1/users/addresses/branches/1
+## Architecture
 
-20. POST : http://127.0.0.1:8000/api/v1/shops
-21. GET : http://127.0.0.1:8000/api/v1/shops
-22. GET : http://127.0.0.1:8000/api/v1/shops/1
-23. GET : http://127.0.0.1:8000/api/v1/shops/1/items
-24. GET : http://127.0.0.1:8000/api/v1/shops/1/items/all
-25. GET : http://127.0.0.1:8000/api/v1/shops/1/menu
-26. GET : http://127.0.0.1:8000/api/v1/shops/search
-27. GET : http://127.0.0.1:8000/api/v1/shops/latest
-28. GET : http://127.0.0.1:8000/api/v1/shops/enabled
-29. GET : http://127.0.0.1:8000/api/v1/shops/disabled
-30. DELETE : http://127.0.0.1:8000/api/v1/shops
-31. DELETE : http://127.0.0.1:8000/api/v1/shops/1
-
-32. POST : http://127.0.0.1:8000/api/v1/shops/branches
-33. GET : http://127.0.0.1:8000/api/v1/shops/branches
-34. GET : http://127.0.0.1:8000/api/v1/shops/branches/1
-35. GET : http://127.0.0.1:8000/api/v1/shops/branches/enabled
-36. GET : http://127.0.0.1:8000/api/v1/shops/branches/disabled
-37. DELETE : http://127.0.0.1:8000/api/v1/shops/branches
-38. DELETE : http://127.0.0.1:8000/api/v1/shops/branches/1
-
-39. POST : http://127.0.0.1:8000/api/v1/categories
-40. GET : http://127.0.0.1:8000/api/v1/categories
-41. GET : http://127.0.0.1:8000/api/v1/categories/1
-42. GET : http://127.0.0.1:8000/api/v1/categories/enabled
-43. GET : http://127.0.0.1:8000/api/v1/categories/disabled
-44. DELETE : http://127.0.0.1:8000/api/v1/categories
-45. DELETE : http://127.0.0.1:8000/api/v1/categories/1
-
-46. POST : http://127.0.0.1:8000/api/v1/items
-47. POST : http://127.0.0.1:8000/api/v1/items/comments
-48. GET : http://127.0.0.1:8000/api/v1/items/comments
-49. GET : http://127.0.0.1:8000/api/v1/items/comments/1
-50. GET : http://127.0.0.1:8000/api/v1/items/comments/all
-51. GET : http://127.0.0.1:8000/api/v1/items
-52. GET : http://127.0.0.1:8000/api/v1/items/search
-53. GET : http://127.0.0.1:8000/api/v1/items/latest
-54. GET : http://127.0.0.1:8000/api/v1/items/1
-55. GET : http://127.0.0.1:8000/api/v1/items/enabled
-56. GET : http://127.0.0.1:8000/api/v1/items/disabled
-57. DELETE : http://127.0.0.1:8000/api/v1/items
-58. DELETE : http://127.0.0.1:8000/api/v1/items/1
-
-# Request Response Example
-For Example When You Create User This is the Request Body
 ```
-{
-    "name": "Mohammed abd elrahman",
-    "image": "https://uxwing.com/wp-content/themes/uxwing/download/12-people-gesture/user-profile.png",
-    "password": "123456789",
-    "email": "mohhamabd18@gmail.com",
-    "gender": "Male",
-    "age": 15,
-    "phone_number": "123456789",
-    "location_lat": 15.2,
-    "location_lng": 1548.2,
-    "location_name": "Gaza",
-    "type": "Admin",
-    "security_question": "asdfasdsdfsdf",
-    "security_question_answer": "dsfsdfsefsedvsev"
-}
+Controller  →  Service  →  Model  →  Database
+ (HTTP)      (business     (Eloquent)
+              logic)
 ```
 
-### Success Response
-```
-{
-    "code": 201,
-    "message": "Data Found",
-    "status": true,
-    "path": "http://127.0.0.1:8000/api/v1/users",
-    "timestamp": 1618272720,
-    "data": {
-        "name": "Mohammed abd elrahman",
-        "image": "https://uxwing.com/wp-content/themes/uxwing/download/12-people-gesture/user-profile.png",
-        "email": "ya15zan98@gmail.com",
-        "gender": "Male",
-        "age": 15,
-        "phone_number": "12345671589",
-        "location_lat": 15.2,
-        "location_lng": 1548.2,
-        "location_name": "Gaza",
-        "type": "Admin",
-        "created_at": "2021-04-13 00:11:59",
-        "is_enabled": 1,
-        "is_account_activated": 0,
-        "status": "NOT_VERIFIED",
-        "id": 2,
-        "is_account_enabled": 0
-    }
-}
-```
+- **Controllers**: entry point for each API group
+- **Services**: the logic behind each endpoint
+- **Models**: the data saved in the database
+- **JWT**: issued on login and sent as `Authorization: Bearer <token>`
 
-### Error Response
-```
-{
-    "code": 400,
-    "message": "Failed",
-    "status": false,
-    "path": "http://127.0.0.1:8000/api/v1/users",
-    "timestamp": 1618272664,
-    "error": 0,
-    "errorMessage": "Phone Number Already Used ...",
-    "stackTrace": "#0 E:\\shop-api\\app\\Http\\Controllers\\UsersController.php(24): App\\Models\\Services\\UserService->saveEntity()\n#1 E:\\shop-api\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Controller.php(54): App\\Http\\Controllers\\UsersController->saveEntity()\n#2 E:\\shop-api\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php(45): Illuminate\\Routing\\Controller->callAction()\n#3 E:\\shop-api\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(254): Illuminate\\Routing\\ControllerDispatcher->dispatch()\n#4 E:\\shop-api\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Route.php(197): Illuminate\\Routing\\Route->runController()\n#5 E:\\shop-api\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Router.php(695): Illuminate\\Routing\\Route->run()\n#6 E:\\shop-api\\vendor\\laravel\\framework\\src\\Illuminate\\Pipeline\\Pipeline.php
-```
+## Getting started
 
-# Login Example
+### Requirements
 
-### Success Response
-```
-{
-    "code": 200,
-    "message": "Data Found",
-    "status": true,
-    "path": "http://127.0.0.1:8000/api/v1/users/login",
-    "timestamp": 1618272942,
-    "data": {
-        "user": {
-            "name": "Mohammed abd elrahman",
-            "image": "https://uxwing.com/wp-content/themes/uxwing/download/12-people-gesture/user-profile.png",
-            "email": "mohhamabd18@gmail.com",
-            "gender": "Male",
-            "age": 15,
-            "phone_number": "123456789",
-            "location_lat": 15.2,
-            "location_lng": 1548.2,
-            "location_name": "Gaza",
-            "type": "Admin",
-            "created_at": "2021-04-10 16:38:42",
-            "is_enabled": 1,
-            "is_account_activated": 1,
-            "status": "NOT_VERIFIED",
-            "id": 7,
-            "is_account_enabled": 1
-        },
-        "token": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC92MVwvdXNlcnNcL2xvZ2luIiwiaWF0IjoxNjE4MjcyOTQyLCJleHAiOjE2MTgyNzY1NDIsIm5iZiI6MTYxODI3Mjk0MiwianRpIjoiRzgzdjRhWVdlR3pRVFlGTCIsInN1YiI6NywicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.m2nUT8lCb-N8rH9hwYoL5LPBZEA50auP1LJDyDnQHlU",
-        "tokenKey": "Bearer"
-    }
-}
-```
+- PHP 7.3+ (or 8.x) and Composer
+- Laravel 8, with `tymon/jwt-auth` for tokens
+- MySQL or MariaDB
+- Docker (optional)
 
-### Error Response
-```
-{
-    "code": 400,
-    "message": "Failed",
-    "status": false,
-    "path": "http://127.0.0.1:8000/api/v1/users/login",
-    "timestamp": 1618272893,
-    "error": 0,
-    "errorMessage": "Incorrect Email Or Password Please Try Again",
-    "stackTrace": "#0 E:\\shop-api\\app\\Http\\Controllers\\UsersController.php(41): App\\Models\\Services\\UserService->loginAccount()\n#1 E:\\shop-api\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\Controller.php(54): App\\Http\\Controllers\\UsersController->loginAccount()\n#2 E:\\shop-api\\vendor\\laravel\\framework\\src\\Illuminate\\Routing\\ControllerDispatcher.php(45): Illuminate\\Routing\\Controller->callAction()\n#3 
-```
+### Run locally
 
-# Development Commands
-```
+```bash
+git clone https://github.com/MohammedAbd20/ShopApi.git
+cd ShopApi
+composer install
+cp .env.example .env
+php artisan key:generate
+php artisan jwt:secret
+php artisan migrate
 php artisan serve
-php artisan migrate --force
-php artisan migrate:refresh
-php artisan make:migration create_shops_table
 ```
 
+The API is then available at `http://127.0.0.1:8000/api/v1`.
 
-# About the Developer
-This project was developed by Mohammed Abd Elrahman.
-Contact: mohhamabd18@gmail.com
-GitHub: https://github.com/MohammedAbd20
-#
+### Run with Docker
+
+```bash
+docker compose up -d --build
+```
+
+## API overview
+
+Base URL: `/api/v1`
+
+| Group | Endpoints (examples) |
+|---|---|
+| **Users** | `POST /users`, `POST /users/login`, `POST /users/otp/verify`, `POST /users/otp/refresh`, `GET /users`, `GET /users/{id}`, `GET /users/enabled`, `GET /users/disabled`, `DELETE /users/{id}` |
+| **Password reset** | `GET /users/reset/question`, `POST /users/reset/answer` |
+| **Addresses** | `POST /shops/users/addresses`, `GET /shops/users/addresses`, `GET /shops/users/addresses/{id}` |
+| **Shops** | `POST /shops`, `GET /shops`, `GET /shops/{id}`, `GET /shops/{id}/items`, `GET /shops/{id}/menu`, `GET /shops/search`, `GET /shops/latest`, `DELETE /shops/{id}` |
+| **Branches** | `POST /shops/branches`, `GET /shops/branches`, `GET /shops/branches/{id}`, `DELETE /shops/branches/{id}` |
+| **Categories** | `POST /categories`, `GET /categories`, `GET /categories/{id}`, `DELETE /categories/{id}` |
+| **Items** | `POST /items`, `GET /items`, `GET /items/{id}`, `GET /items/search`, `GET /items/latest`, `DELETE /items/{id}` |
+| **Comments** | `POST /items/comments`, `GET /items/comments`, `GET /items/comments/{id}` |
+
+Most list groups also support `/enabled` and `/disabled`.
+
+## Examples
+
+### Create a user
+
+`POST /api/v1/users`
+
+```json
+{
+  "name": "Jane Doe",
+  "email": "jane@example.com",
+  "password": "********",
+  "gender": "Female",
+  "age": 28,
+  "phone_number": "0000000000",
+  "location_name": "Gaza",
+  "type": "Customer",
+  "security_question": "Your first school?",
+  "security_question_answer": "********"
+}
+```
+
+### Login
+
+`POST /api/v1/users/login`
+
+```json
+{ "email": "jane@example.com", "password": "********" }
+```
+
+Response:
+
+```json
+{
+  "code": 200,
+  "message": "Data Found",
+  "status": true,
+  "data": {
+    "user": { "id": 7, "name": "Jane Doe", "email": "jane@example.com" },
+    "token": "<jwt-token>",
+    "tokenKey": "Bearer"
+  }
+}
+```
+
+### Error format
+
+```json
+{
+  "code": 400,
+  "message": "Failed",
+  "status": false,
+  "errorMessage": "Incorrect Email Or Password Please Try Again"
+}
+```
+
+## Tests
+
+```bash
+php artisan test
+```
+
+## License
+
+Released under the [Apache 2.0 License](LICENSE).
+
+## Author
+
+**Mohammed Abd Elrahman**: [GitHub](https://github.com/MohammedAbd20) · [LinkedIn](https://www.linkedin.com/in/mohammed-abd-elrahman-9618a732b/)
