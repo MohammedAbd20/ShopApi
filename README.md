@@ -8,6 +8,16 @@ A RESTful API built with **Laravel** for managing shops, shop branches, product 
 ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
 ![License](https://img.shields.io/badge/License-Apache_2.0-blue)
 
+## Screenshots
+
+An API has no pages to open, so these are real responses from a local run, shown as a REST client would show them (the token and some user fields are shortened).
+
+| Log in | List categories |
+|---|---|
+| ![Login request and response](docs/login.png) | ![Categories response](docs/categories.png) |
+
+![Validation error](docs/validation-error.png)
+
 ## Features
 
 - User registration and login with **JWT** (Bearer token)
